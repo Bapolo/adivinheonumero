@@ -15,7 +15,7 @@ function Home()
 
     function redirecionar()
     {
-        navegarEntreTela("/jogar")
+        navegarEntreTela(`/jogar?nivel=${nivel}`)
     }
 
     return (
