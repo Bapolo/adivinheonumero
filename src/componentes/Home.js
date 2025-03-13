@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import Botao from './Botao'
-import TelaDoJogo from './TelaDoJogo'
 
 function Home()
 {

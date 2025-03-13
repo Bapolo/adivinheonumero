@@ -24,7 +24,7 @@ function TelaDoJogo()
 
     function verificarSeAcertou()
     {
-        if (numeroTestado !== 0)
+        if (numeroTestado !== "")
         {
             if (numeroTestado < numeroAleatorio)
             {

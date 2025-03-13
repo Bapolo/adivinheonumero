@@ -1,5 +1,5 @@
 import './App.css';
-import { HashserRouter as Router, Routes, Route} from 'react-router-dom'
+import { HashRouter as Router, Routes, Route} from 'react-router-dom'
 import Home from './componentes/Home.js'
 import TelaDoJogo from './componentes/TelaDoJogo.js';
 
