@@ -5,7 +5,7 @@ import TelaDoJogo from './componentes/TelaDoJogo.js';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <Router>
         <Routes>
           <Route path = '/' element = { <Home /> } />

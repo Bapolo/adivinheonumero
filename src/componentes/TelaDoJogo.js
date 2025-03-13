@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate,useLocation } from 'react-router-dom'
 import Botao from './Botao'
+import '../App.css'
 
 function useQuery()
 {
@@ -14,6 +15,7 @@ function TelaDoJogo()
     const [numeroTestado,setNumeroTestado] = useState("")
     const [mensagemDeFeedback,setMensagemDeFeedback] = useState("Escolha um número de 1 à 100")
     const [tentativas,setTentativas] = useState(0)
+    const [erro,setErro] = useState(false)
 
     const redirecionar = useNavigate()
 
@@ -41,13 +43,12 @@ function TelaDoJogo()
         }        
 
         setTentativas(tentativasInicial)
-        console.log(tentativasInicial)
     }
 
-    function chutarNumero(e)
+    function receberNumero(e)
     {
+        setErro(false)
         setNumeroTestado(e.target.value)
-        console.log(e.target.value)
     }
 
     function verificarSeAcertou()
@@ -67,23 +68,31 @@ function TelaDoJogo()
                 else
                 {
                     console.log("Parabén, vc acertou!")
-                    redirecionar("/")
+                    redirecionar(`/?resultado=true&&numero=${numeroAleatorio}`)
                 }
 
                 setTentativas(tentativas - 1)
             }
             else
             {
-                redirecionar("/")
+                redirecionar(`/?resultado=false&&numero=${numeroAleatorio}`)
             }
         }
         else
         {
-            alert("Digite algum valor")
+            setErro(true)
         }
 
         setNumeroTestado("")
         return
+    }
+
+    function enter(e)
+    {
+        if (e.key === "Enter")
+        {
+            verificarSeAcertou()
+        }
     }
 
     function voltar()
@@ -93,13 +102,15 @@ function TelaDoJogo()
 
     return (
         <>
-            <h2>Tentativas {tentativas}</h2>
+            <h2>Tentativas: {tentativas}</h2>
+
+            {erro && <p className = 'alerta-danger'>O campo de entrada não pode estar vázio!</p>}
 
             <h2>{ mensagemDeFeedback }</h2>
 
-            <input type = 'number' value = { numeroTestado } onChange = { chutarNumero } />
+            <input type = 'number' value = { numeroTestado } onChange = { receberNumero } onKeyDown = { enter }/>
 
-            <Botao texto = 'advinhar' onClick = { verificarSeAcertou }/>
+            <Botao texto = 'advinhar' onClick = { verificarSeAcertou } className= "botao-azul"/>
 
             <Botao texto = 'voltar' onClick = { voltar }/>
         </>
