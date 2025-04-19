@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/adivinheonumero/static/css/main.9002f1fa.css",
-    "main.js": "/adivinheonumero/static/js/main.36388bf9.js",
+    "main.js": "/adivinheonumero/static/js/main.350d8055.js",
     "static/js/453.c6c453e4.chunk.js": "/adivinheonumero/static/js/453.c6c453e4.chunk.js",
     "index.html": "/adivinheonumero/index.html",
     "main.9002f1fa.css.map": "/adivinheonumero/static/css/main.9002f1fa.css.map",
-    "main.36388bf9.js.map": "/adivinheonumero/static/js/main.36388bf9.js.map",
+    "main.350d8055.js.map": "/adivinheonumero/static/js/main.350d8055.js.map",
     "453.c6c453e4.chunk.js.map": "/adivinheonumero/static/js/453.c6c453e4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9002f1fa.css",
-    "static/js/main.36388bf9.js"
+    "static/js/main.350d8055.js"
   ]
 }

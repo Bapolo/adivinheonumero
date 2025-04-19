@@ -1,46 +1,40 @@
 import { useState, useEffect } from 'react'
-import { useNavigate,useLocation } from 'react-router-dom'
 import Botao from './Botao'
 import '../App.css'
+import { useNavegar } from './funcoes/useNavegar'
 
-function useQuery()
-{
-    return new URLSearchParams(useLocation().search)
-}
 
 function TelaDoJogo()
 {
-    const query = useQuery()
-    const [numeroAleatorio,setNumeroAleatorio] = useState(undefined)
     const [numeroTestado,setNumeroTestado] = useState("")
     const [mensagemDeFeedback,setMensagemDeFeedback] = useState("Escolha um número de 1 à 100")
     const [tentativas,setTentativas] = useState(0)
     const [erro,setErro] = useState(false)
 
-    const redirecionar = useNavigate()
+    const redirecionar = useNavegar()
 
     useEffect(() => {
-        const dificuldade = query.get("nivel") || "facil"
+        const dificuldade = sessionStorage.getItem("nivel") || "facil"
         numeroDeTentativas(dificuldade)
         const n = Math.floor( Math.random() * 100) + 1
-        setNumeroAleatorio(n)
+        sessionStorage.setItem("numeroAleatorio",n)
+        sessionStorage.setItem("numero",n)
+        sessionStorage.setItem("nivelAnterior",sessionStorage.getItem("nivel"))
     }, [])
 
     function numeroDeTentativas(dificuldade)
     {
-        let tentativasInicial
+        let tentativasInicial = 9
+
         if (dificuldade === 'medio')
         {
             tentativasInicial = 6
         }
-        else if(dificuldade === 'dificil')
+
+        if(dificuldade === 'dificil')
         {
             tentativasInicial = 3
-        }
-        else
-        {
-            tentativasInicial = 9
-        }        
+        }      
 
         setTentativas(tentativasInicial)
     }
@@ -53,36 +47,35 @@ function TelaDoJogo()
 
     function verificarSeAcertou()
     {
-        if (numeroTestado !== "")
-        {
-            if (tentativas > 1)
-            {
-                if (numeroTestado < numeroAleatorio)
-                {                
-                    setMensagemDeFeedback("O número digitado é menor")
-                }
-                else if(numeroTestado > numeroAleatorio)
-                {
-                    setMensagemDeFeedback("O número digitado é maior")
-                }
-                else
-                {
-                    console.log("Parabén, vc acertou!")
-                    redirecionar(`/?resultado=true&&numero=${numeroAleatorio}`)
-                }
-
-                setTentativas(tentativas - 1)
-            }
-            else
-            {
-                redirecionar(`/?resultado=false&&numero=${numeroAleatorio}`)
-            }
-        }
-        else
+        if (numeroTestado === "")
         {
             setErro(true)
+            return 
         }
 
+        if (tentativas <= 1)
+        {
+            sessionStorage.setItem("resultado", false)
+            redirecionar("/")
+        }
+
+        if (numeroTestado < sessionStorage.getItem("numeroAleatorio"))
+        {                
+            setMensagemDeFeedback("O número digitado é menor")
+        }
+
+        if(numeroTestado > sessionStorage.getItem("numeroAleatorio"))
+        {
+            setMensagemDeFeedback("O número digitado é maior")
+        }
+        
+        if (numeroTestado == sessionStorage.getItem("numeroAleatorio"))
+        {
+            sessionStorage.setItem("resultado",true)
+            redirecionar("/")
+        }
+
+        setTentativas(tentativas - 1)
         setNumeroTestado("")
         return
     }
@@ -97,6 +90,7 @@ function TelaDoJogo()
 
     function voltar()
     {
+        sessionStorage.setItem("resultado", null)
         redirecionar("/")
     }
 
